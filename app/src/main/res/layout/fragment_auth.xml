@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.auth.AuthFragment">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="page"
+            type="int"
+            android:value="0"/>
+    </data>
 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
@@ -20,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giriş Yap"
+                android:text='@{page == 0 ? "Giriş Yap" : page == 1 ? "Kayıt Ol" : "Şifremi Sıfırla"}'
                 android:textSize="21sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorTextPrimary"
@@ -46,49 +52,92 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email veya Telefon Numarası"
-                android:textColor="@color/colorTextSecondary"
-                android:layout_marginBottom="5dp"/>
-
-            <EditText
-                android:inputType="textEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_input_background"
-                android:hint="example@example.com"
-                android:textColorHint="@color/colorTextTertiary"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="16sp"
-                android:padding="12dp"
-                android:layout_marginBottom="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Parola"
-                android:textColor="@color/colorTextSecondary"
-                android:layout_marginBottom="5dp"/>
-
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_input_background"
-                android:hint="Password"
-                android:textColorHint="@color/colorTextTertiary"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="16sp"
-                android:padding="12dp"
-                android:layout_marginBottom="5dp"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email veya Telefon Numarası"
+                    android:textColor="@color/colorTextSecondary"
+                    android:layout_marginBottom="5dp"/>
+
+                <EditText
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_input_background"
+                    android:hint="example@example.com"
+                    android:textColorHint="@color/colorTextTertiary"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    android:padding="12dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visible='@{page == 1}'
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ad Soyad"
+                    android:textColor="@color/colorTextSecondary"
+                    android:layout_marginBottom="5dp"/>
+
+                <EditText
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_input_background"
+                    android:hint="example@example.com"
+                    android:textColorHint="@color/colorTextTertiary"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    android:padding="12dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visible='@{page != 2}'
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parola"
+                    android:textColor="@color/colorTextSecondary"
+                    android:layout_marginBottom="5dp"/>
+
+                <EditText
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_input_background"
+                    android:hint="Password"
+                    android:textColorHint="@color/colorTextTertiary"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visible='@{page == 0}'
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="5dp">
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -105,6 +154,7 @@
                     android:text="Oturumu açık tut"/>
 
                 <TextView
+                    android:id="@+id/tvForgot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Şifremi unuttum?"
@@ -116,20 +166,23 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btProcess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_button_background"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:text="Giriş Yap"
+                android:text='@{page == 0 ? "Giriş Yap" : page == 1 ? "Kayıt Ol" : "Şifremi Sıfırla"}'
                 android:textColor="@android:color/white"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
+                android:id="@+id/tvToggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="center_horizontal"
-                android:text="Hesabın yok mu? Hemen kayıt ol!"
+                android:text='@{page == 0 ? "Hesabın yok mu? Hemen kayıt ol!" : page == 1 ? "Zaten kayıtlı mısın? Giriş yap!" : "Hemen giriş yap!"}'
                 android:textColor="@color/colorTextSecondary"
                 android:layout_margin="0dp"
                 android:minHeight="0dp"
