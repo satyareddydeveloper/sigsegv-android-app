@@ -1,22 +1,18 @@
 package com.sigsegv.doctor.ui.auth;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.sigsegv.doctor.R;
+import com.sigsegv.doctor.base.BaseFragment;
+import com.sigsegv.doctor.databinding.FragmentAuthBinding;
+import com.sigsegv.doctor.ui.main.MainActivity;
 
-public class AuthFragment extends Fragment {
+public class AuthFragment extends BaseFragment<FragmentAuthBinding, MainActivity> {
 
     public static AuthFragment newInstance() {
         return new AuthFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_auth, container, false);
+    protected int layoutRes() {
+        return R.layout.fragment_auth;
     }
 }
