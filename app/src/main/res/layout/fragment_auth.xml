@@ -1,14 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.AuthFragment">
+    tools:context=".ui.auth.AuthFragment"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giriş Yap"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginBottom="7dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lütfen devam edebilmek için giriş yapın!"
+            android:textSize="17sp"
+            android:textColor="@color/colorTextSecondary"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@mipmap/welcome"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email veya Telefon Numarası"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_input_background"
+            android:hint="example@example.com"
+            android:textColorHint="@color/colorTextTertiary"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parola"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_input_background"
+            android:hint="Password"
+            android:textColorHint="@color/colorTextTertiary"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:layout_marginBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="5dp"
+                android:checked="true"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorTextSecondary"
+                android:text="Oturumu açık tut"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Şifremi unuttum?"
+                android:textColor="@color/colorAccent"
+                android:textStyle="normal"
+                android:padding="2dp"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_button_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="Giriş Yap"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:text="Hesabın yok mu? Hemen kayıt ol!"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_margin="0dp"
+            android:minHeight="0dp"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
