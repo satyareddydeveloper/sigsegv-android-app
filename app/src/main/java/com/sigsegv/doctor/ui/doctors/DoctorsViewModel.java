@@ -9,6 +9,7 @@ import com.sigsegv.doctor.rest.RestRepository;
 import com.sigsegv.doctor.rest.datasource.DoctorDataSource;
 import com.sigsegv.doctor.rest.model.Doctor;
 import com.sigsegv.doctor.util.MainThreadExecutor;
+import com.sigsegv.doctor.util.PrefUtils;
 
 import javax.inject.Inject;
 
@@ -23,8 +24,8 @@ public class DoctorsViewModel extends ViewModel {
     private final MutableLiveData<PagedList<Doctor>> doctors = new MutableLiveData<>();
 
     @Inject
-    DoctorsViewModel(RestRepository restRepository) {
-        doctorDataSource = new DoctorDataSource(disposable, restRepository);
+    DoctorsViewModel(PrefUtils prefUtils, RestRepository restRepository) {
+        doctorDataSource = new DoctorDataSource(prefUtils.getUserToken(), disposable, restRepository);
         fetchDoctors();
     }
 

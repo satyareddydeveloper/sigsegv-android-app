@@ -17,17 +17,19 @@ public class DoctorDataSource extends PageKeyedDataSource<Integer, Doctor> {
 
     private static final String TAG = "DoctorDataSource";
 
+    private final String token;
     private final CompositeDisposable disposable;
     private final RestRepository restRepository;
 
-    public DoctorDataSource(CompositeDisposable disposable, RestRepository restRepository) {
+    public DoctorDataSource(String token, CompositeDisposable disposable, RestRepository restRepository) {
+        this.token = token;
         this.disposable = disposable;
         this.restRepository = restRepository;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Doctor> callback) {
-        disposable.add(restRepository.getDoctors(1, "").subscribeOn(Schedulers.io())
+        disposable.add(restRepository.getDoctors(token, 1, "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<PagedResponse<Doctor>>() {
                     @Override
                     public void onSuccess(PagedResponse<Doctor> response) {
@@ -47,7 +49,7 @@ public class DoctorDataSource extends PageKeyedDataSource<Integer, Doctor> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Doctor> callback) {
-        disposable.add(restRepository.getDoctors(params.key, "").subscribeOn(Schedulers.io())
+        disposable.add(restRepository.getDoctors(token, params.key, "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<PagedResponse<Doctor>>() {
                     @Override
                     public void onSuccess(PagedResponse<Doctor> response) {

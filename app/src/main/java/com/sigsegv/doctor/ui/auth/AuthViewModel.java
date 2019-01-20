@@ -6,7 +6,8 @@ import android.arch.lifecycle.ViewModel;
 
 import com.sigsegv.doctor.rest.RestRepository;
 import com.sigsegv.doctor.rest.model.NormalResponse;
-import com.sigsegv.doctor.rest.model.TokenReponse;
+import com.sigsegv.doctor.rest.model.TokenResponse;
+import com.sigsegv.doctor.util.PrefUtils;
 
 import javax.inject.Inject;
 
@@ -17,6 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AuthViewModel extends ViewModel {
 
+    private final PrefUtils prefUtils;
     private final RestRepository restRepository;
     private final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -25,16 +27,18 @@ public class AuthViewModel extends ViewModel {
     private final MutableLiveData<AuthResponse> signUpResult = new MutableLiveData<>();
 
     @Inject
-    AuthViewModel(RestRepository restRepository) {
+    AuthViewModel(PrefUtils prefUtils, RestRepository restRepository) {
+        this.prefUtils = prefUtils;
         this.restRepository = restRepository;
     }
 
     //Check credentials on server
     void signIn(String email, String password) {
         disposable.add(restRepository.signIn(email, password).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<TokenReponse>() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<TokenResponse>() {
                     @Override
-                    public void onSuccess(TokenReponse tokenReponse) {
+                    public void onSuccess(TokenResponse tokenReponse) {
+                        prefUtils.setUserToken(tokenReponse.getToken());
                         signInResult.postValue(new AuthResponse(true, null, tokenReponse.getToken()));
                     }
 

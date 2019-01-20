@@ -3,7 +3,7 @@ package com.sigsegv.doctor.rest;
 import com.sigsegv.doctor.rest.model.Doctor;
 import com.sigsegv.doctor.rest.model.NormalResponse;
 import com.sigsegv.doctor.rest.model.PagedResponse;
-import com.sigsegv.doctor.rest.model.TokenReponse;
+import com.sigsegv.doctor.rest.model.TokenResponse;
 
 import javax.inject.Inject;
 
@@ -18,7 +18,7 @@ public class RestRepository {
         this.restService = restService;
     }
 
-    public Single<TokenReponse> signIn(String email, String password) {
+    public Single<TokenResponse> signIn(String email, String password) {
         return restService.signIn(email, password);
     }
 
@@ -26,7 +26,7 @@ public class RestRepository {
         return restService.signUp(email, name, password);
     }
 
-    public Single<PagedResponse<Doctor>> getDoctors(int page, String province) {
-        return restService.getDoctors(page, province);
+    public Single<PagedResponse<Doctor>> getDoctors(String token, int page, String province) {
+        return restService.getDoctors(String.format("Token %s", token), page, province);
     }
 }
