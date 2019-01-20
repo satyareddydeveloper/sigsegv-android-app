@@ -112,11 +112,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visible='@{page != 2}'
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -147,7 +146,6 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text='@{processing ? "Bekleyiniz.." : page == 0 ? "Giriş Yap" : page == 1 ? "Kayıt Ol" : "Şifremi Sıfırla"}'
                 android:textColor="@android:color/white"
-                android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"/>
 
             <TextView

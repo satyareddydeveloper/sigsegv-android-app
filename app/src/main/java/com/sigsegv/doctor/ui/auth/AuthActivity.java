@@ -2,6 +2,7 @@ package com.sigsegv.doctor.ui.auth;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.sigsegv.doctor.R;
 import com.sigsegv.doctor.base.BaseActivity;
 import com.sigsegv.doctor.databinding.ActivityAuthBinding;
+import com.sigsegv.doctor.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -73,7 +75,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding> {
             }
         });
 
-        //Start observing liveData of auth response
+        //Start observing liveData of the signIn response
         viewModel.getSignInResult().observe(this, authResponse -> {
             if (authResponse != null) {
 
@@ -82,11 +84,19 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding> {
 
                 if (authResponse.getStatus()) {
                     Toast.makeText(getBaseContext(), "Success!", Toast.LENGTH_SHORT).show();
+
+                    //Save user token to shared preferences
+
+
+                    //Login success, redirect to main
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
                 } else
                     Toast.makeText(getBaseContext(), authResponse.getError(), Toast.LENGTH_SHORT).show();
             }
         });
 
+        //Start observing liveData of the signUp response
         viewModel.getSignUpResult().observe(this, authResponse -> {
             if (authResponse != null) {
 

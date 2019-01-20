@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import com.sigsegv.doctor.di.util.ViewModelFactory;
 import com.sigsegv.doctor.di.util.ViewModelKey;
 import com.sigsegv.doctor.ui.auth.AuthViewModel;
+import com.sigsegv.doctor.ui.doctors.DoctorsViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -21,4 +22,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AuthViewModel.class)
     abstract ViewModel bindAuthViewModel(AuthViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DoctorsViewModel.class)
+    abstract ViewModel bindDoctorsViewModel(DoctorsViewModel viewModel);
 }

@@ -17,17 +17,19 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AuthViewModel extends ViewModel {
 
-    private RestRepository restRepository;
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private final RestRepository restRepository;
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
-    private MutableLiveData<AuthResponse> signInResult = new MutableLiveData<>();
-    private MutableLiveData<AuthResponse> signUpResult = new MutableLiveData<>();
+    //Mutable data to send background process results to view
+    private final MutableLiveData<AuthResponse> signInResult = new MutableLiveData<>();
+    private final MutableLiveData<AuthResponse> signUpResult = new MutableLiveData<>();
 
     @Inject
     AuthViewModel(RestRepository restRepository) {
         this.restRepository = restRepository;
     }
 
+    //Check credentials on server
     void signIn(String email, String password) {
         disposable.add(restRepository.signIn(email, password).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<TokenReponse>() {
@@ -43,6 +45,7 @@ public class AuthViewModel extends ViewModel {
                 }));
     }
 
+    //Send credentials to server and save if it's valid
     void signUp(String email, String name, String password) {
         disposable.add(restRepository.signUp(email, name, password).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<NormalResponse>() {
@@ -58,6 +61,7 @@ public class AuthViewModel extends ViewModel {
                 }));
     }
 
+    //Getters for view
     LiveData<AuthResponse> getSignInResult() {
         return signInResult;
     }
