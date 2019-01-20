@@ -26,7 +26,7 @@ public class RestRepository {
         return restService.signUp(email, name, password);
     }
 
-    public Single<PagedResponse<Doctor>> getDoctors() {
-        return restService.getDoctors();
+    public Single<PagedResponse<Doctor>> getDoctors(int page, String province) {
+        return restService.getDoctors(page, province);
     }
 }

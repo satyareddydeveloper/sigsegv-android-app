@@ -2,6 +2,7 @@ package com.sigsegv.doctor.rest.datasource;
 
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.sigsegv.doctor.rest.RestRepository;
 import com.sigsegv.doctor.rest.model.Doctor;
@@ -14,6 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DoctorDataSource extends PageKeyedDataSource<Integer, Doctor> {
 
+    private static final String TAG = "DoctorDataSource";
+
     private final CompositeDisposable disposable;
     private final RestRepository restRepository;
 
@@ -24,10 +27,11 @@ public class DoctorDataSource extends PageKeyedDataSource<Integer, Doctor> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Doctor> callback) {
-        disposable.add(restRepository.getDoctors().subscribeOn(Schedulers.io())
+        disposable.add(restRepository.getDoctors(1, "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<PagedResponse<Doctor>>() {
                     @Override
                     public void onSuccess(PagedResponse<Doctor> response) {
+                        Log.d(TAG, "Retrofit success!");
 
                         //Send callback to data source observer
                         callback.onResult(response.getResults(), 0,
@@ -36,23 +40,26 @@ public class DoctorDataSource extends PageKeyedDataSource<Integer, Doctor> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "Retrofit Error!", e);
                     }
                 }));
     }
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Doctor> callback) {
-        disposable.add(restRepository.getDoctors().subscribeOn(Schedulers.io())
+        disposable.add(restRepository.getDoctors(params.key, "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableSingleObserver<PagedResponse<Doctor>>() {
                     @Override
                     public void onSuccess(PagedResponse<Doctor> response) {
+                        Log.d(TAG, "Retrofit success!");
+
+                        //Send callback to data source observer
                         callback.onResult(response.getResults(), params.key + 1);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "Retrofit Error!", e);
                     }
                 }));
     }

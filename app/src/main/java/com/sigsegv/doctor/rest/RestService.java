@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface RestService {
 
@@ -22,5 +23,5 @@ public interface RestService {
     Single<NormalResponse> signUp(@Field("email") String username, @Field("name") String name, @Field("password") String password);
 
     @GET("doctors/doctor")
-    Single<PagedResponse<Doctor>> getDoctors();
+    Single<PagedResponse<Doctor>> getDoctors(@Query("page") int page, @Query("province") String province);
 }

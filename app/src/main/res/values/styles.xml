@@ -13,4 +13,19 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+    <style name="AppThemeTranslucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="BottomNavTextInactive">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BottomNavTextActive">
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>
