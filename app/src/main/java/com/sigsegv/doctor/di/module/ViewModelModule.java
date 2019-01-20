@@ -8,6 +8,7 @@ import com.sigsegv.doctor.di.util.ViewModelKey;
 import com.sigsegv.doctor.ui.auth.AuthViewModel;
 import com.sigsegv.doctor.ui.doctor.DoctorViewModel;
 import com.sigsegv.doctor.ui.doctors.DoctorsViewModel;
+import com.sigsegv.doctor.ui.search.SearchViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -33,4 +34,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DoctorViewModel.class)
     abstract ViewModel bindDoctorViewModel(DoctorViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    abstract ViewModel bindSearchViewModel(SearchViewModel viewModel);
 }

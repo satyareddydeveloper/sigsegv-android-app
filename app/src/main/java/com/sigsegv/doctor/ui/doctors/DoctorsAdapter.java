@@ -36,17 +36,22 @@ public class DoctorsAdapter extends PagedListAdapter<Doctor, DoctorsAdapter.Doct
     class DoctorViewHolder extends RecyclerView.ViewHolder {
 
         private final RowDoctorBinding binding;
+        private boolean onBind = false;
 
         DoctorViewHolder(RowDoctorBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
             //Handle item clicks
-            itemView.setOnClickListener(v -> adapterCallback.onDoctorSelected(getItem(getAdapterPosition())));
+            itemView.setOnClickListener(v -> {
+                if (!onBind) adapterCallback.onDoctorSelected(getItem(getAdapterPosition()));
+            });
         }
 
         void bind(Doctor doctor) {
+            onBind = true;
             binding.setDoctor(doctor);
+            onBind = false;
         }
     }
 

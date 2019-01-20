@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.MainActivity">
 
-    <data>
-        <variable
-            name="doctor"
-            type="com.sigsegv.doctor.rest.model.Doctor"/>
-    </data>
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

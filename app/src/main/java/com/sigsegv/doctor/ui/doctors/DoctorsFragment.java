@@ -12,6 +12,8 @@ import com.sigsegv.doctor.R;
 import com.sigsegv.doctor.base.BaseFragment;
 import com.sigsegv.doctor.databinding.FragmentDoctorsBinding;
 import com.sigsegv.doctor.rest.model.Doctor;
+import com.sigsegv.doctor.ui.doctor.DoctorFragment;
+import com.sigsegv.doctor.ui.doctor.DoctorViewModel;
 import com.sigsegv.doctor.ui.main.MainActivity;
 
 import javax.inject.Inject;
@@ -57,6 +59,9 @@ public class DoctorsFragment extends BaseFragment<FragmentDoctorsBinding, MainAc
 
     @Override
     public void onDoctorSelected(Doctor doctor) {
-        getBaseActivity().showDoctor(doctor);
+        final DoctorViewModel doctorViewModel = ViewModelProviders.of(getBaseActivity(), viewModelFactory).get(DoctorViewModel.class);
+        doctorViewModel.setDoctor(doctor);
+        getBaseActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                .add(R.id.frameLayout, DoctorFragment.newInstance()).commit();
     }
 }
