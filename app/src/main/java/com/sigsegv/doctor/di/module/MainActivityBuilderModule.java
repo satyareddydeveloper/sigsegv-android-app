@@ -1,6 +1,6 @@
 package com.sigsegv.doctor.di.module;
 
-import com.sigsegv.doctor.ui.auth.AuthFragment;
+import com.sigsegv.doctor.ui.doctors.DoctorsFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -9,5 +9,5 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class MainActivityBuilderModule {
 
     @ContributesAndroidInjector
-    abstract AuthFragment provideAuthFragmentFactory();
+    abstract DoctorsFragment provideDoctorsFragmentFactory();
 }
