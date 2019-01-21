@@ -42,8 +42,8 @@ public class DoctorsViewModel extends ViewModel {
     }
 
     void setKeyword(String keyword) {
-        this.keyword = keyword;
-        fetchDoctors();
+        //this.keyword = keyword;
+        //fetchDoctors();
     }
 
     @Override
