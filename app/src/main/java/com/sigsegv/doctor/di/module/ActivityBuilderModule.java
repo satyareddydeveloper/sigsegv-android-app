@@ -7,6 +7,9 @@ import com.sigsegv.doctor.ui.start.StartActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
+/**
+ * Provide activity injectors
+ */
 @Module
 public abstract class ActivityBuilderModule {
 

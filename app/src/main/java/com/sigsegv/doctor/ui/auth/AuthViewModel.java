@@ -18,6 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AuthViewModel extends ViewModel {
 
+    //Initialize required objects
     private final PrefUtils prefUtils;
     private final RestRepository restRepository;
     private final CompositeDisposable disposable = new CompositeDisposable();
@@ -63,6 +64,14 @@ public class AuthViewModel extends ViewModel {
                         signUpResult.postValue(new AuthResponse(false, e.getMessage(), null));
                     }
                 }));
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        //Dispose process queue on clear
+        disposable.dispose();
     }
 
     //Getters for view

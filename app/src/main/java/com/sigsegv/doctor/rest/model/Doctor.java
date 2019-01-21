@@ -6,6 +6,7 @@ public class Doctor {
     private String name;
     private Clinic clinic;
     private Hospital hospital;
+    private int rating;
 
     public int getId() {
         return id;
@@ -21,5 +22,9 @@ public class Doctor {
 
     public Hospital getHospital() {
         return hospital;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

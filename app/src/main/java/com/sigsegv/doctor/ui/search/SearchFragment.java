@@ -27,7 +27,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, MainActi
         return  new SearchFragment();
     }
 
-    @Override
+    @Override //Send layout id to super class
     protected int layoutRes() {
         return R.layout.fragment_search;
     }

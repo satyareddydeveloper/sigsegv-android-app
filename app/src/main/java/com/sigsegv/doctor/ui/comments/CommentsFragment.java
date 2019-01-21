@@ -1,4 +1,4 @@
-package com.sigsegv.doctor.ui.doctor;
+package com.sigsegv.doctor.ui.comments;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -10,26 +10,27 @@ import android.view.View;
 
 import com.sigsegv.doctor.R;
 import com.sigsegv.doctor.base.BaseFragment;
-import com.sigsegv.doctor.databinding.FragmentDoctorBinding;
-import com.sigsegv.doctor.ui.comments.CommentsFragment;
+import com.sigsegv.doctor.databinding.FragmentCommentsBinding;
+import com.sigsegv.doctor.ui.doctor.DoctorViewModel;
 import com.sigsegv.doctor.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-public class DoctorFragment extends BaseFragment<FragmentDoctorBinding, MainActivity> {
+public class CommentsFragment extends BaseFragment<FragmentCommentsBinding, MainActivity> {
 
     //Inject Dagger 2 provided classes
     @Inject ViewModelProvider.Factory viewModelFactory;
 
     private DoctorViewModel viewModel;
+    private final CommentAdapter adapter = new CommentAdapter();
 
-    public static DoctorFragment newInstance() {
-        return  new DoctorFragment();
+    public static CommentsFragment newInstance() {
+        return  new CommentsFragment();
     }
 
     @Override //Send layout id to super class
     protected int layoutRes() {
-        return R.layout.fragment_doctor;
+        return R.layout.fragment_comments;
     }
 
     @Override
@@ -37,18 +38,18 @@ public class DoctorFragment extends BaseFragment<FragmentDoctorBinding, MainActi
         super.onViewCreated(view, savedInstanceState);
         viewModel = ViewModelProviders.of(getBaseActivity(), viewModelFactory).get(DoctorViewModel.class);
 
-        //Open comments fragment
-        getBinding().btComments.setOnClickListener(v -> getBaseActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, CommentsFragment.newInstance()).addToBackStack(null).commit());
+        //Initialize recyclerView
+        getBinding().rvComments.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
+        getBinding().rvComments.setAdapter(adapter);
 
-        //Setup ratingBar
-        getBinding().rate.setMax(5);
+        //Handle refresh action
+        getBinding().swipeRefreshLayout.setOnRefreshListener(() -> viewModel.fetchComments());
 
         //Start observing liveData
-        viewModel.getDoctor().observe(this, doctor -> {
-            getBinding().setDoctor(doctor);
-            if (doctor != null)
-                getBinding().rate.setRating(doctor.getRating());
+        viewModel.getComments().observe(this, comments -> {
+            if (comments != null)
+                getBinding().swipeRefreshLayout.setRefreshing(false);
+            adapter.submitList(comments);
         });
     }
 }

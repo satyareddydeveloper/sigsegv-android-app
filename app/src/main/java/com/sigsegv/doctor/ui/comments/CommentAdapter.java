@@ -1,4 +1,4 @@
-package com.sigsegv.doctor.ui.doctor;
+package com.sigsegv.doctor.ui.comments;
 
 import android.arch.paging.PagedListAdapter;
 import android.databinding.DataBindingUtil;
@@ -12,7 +12,7 @@ import com.sigsegv.doctor.R;
 import com.sigsegv.doctor.databinding.RowCommentBinding;
 import com.sigsegv.doctor.rest.model.Comment;
 
-public class CommentAdapter extends PagedListAdapter<Comment, CommentAdapter.DoctorViewHolder> {
+public class CommentAdapter extends PagedListAdapter<Comment, CommentAdapter.CommentViewHolder> {
 
     CommentAdapter() {
         super(DIFF_CALLBACK);
@@ -20,27 +20,29 @@ public class CommentAdapter extends PagedListAdapter<Comment, CommentAdapter.Doc
 
     @NonNull
     @Override
-    public DoctorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new DoctorViewHolder(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
+    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new CommentViewHolder(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
                 R.layout.row_comment, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DoctorViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull CommentViewHolder holder, int i) {
         holder.bind(getItem(i));
     }
 
-    class DoctorViewHolder extends RecyclerView.ViewHolder {
+    class CommentViewHolder extends RecyclerView.ViewHolder {
 
         private final RowCommentBinding binding;
 
-        DoctorViewHolder(RowCommentBinding binding) {
+        CommentViewHolder(RowCommentBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
         void bind(Comment comment) {
             binding.setComment(comment);
+            binding.rating.setMax(5);
+            binding.rating.setRating(comment.getRating());
         }
     }
 

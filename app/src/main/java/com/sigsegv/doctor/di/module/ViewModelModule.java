@@ -8,17 +8,26 @@ import com.sigsegv.doctor.di.util.ViewModelKey;
 import com.sigsegv.doctor.ui.auth.AuthViewModel;
 import com.sigsegv.doctor.ui.doctor.DoctorViewModel;
 import com.sigsegv.doctor.ui.doctors.DoctorsViewModel;
+import com.sigsegv.doctor.ui.main.MainViewModel;
 import com.sigsegv.doctor.ui.search.SearchViewModel;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
+/**
+ * Provide viewModel factory and injectors
+ */
 @Module
 public abstract class ViewModelModule {
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel.class)
+    abstract ViewModel bindMainViewModel(MainViewModel viewModel);
 
     @Binds
     @IntoMap

@@ -12,4 +12,5 @@
     <color name="colorBorderInactive">#dadde1</color>
 
     <color name="colorBackground">#95ECECEC</color>
+    <color name="colorBorder">#f5f5f5</color>
 </resources>

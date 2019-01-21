@@ -3,15 +3,16 @@ package com.sigsegv.doctor.rest.model;
 public class Comment {
 
     private int id;
-    private String owner;
+    private User owner;
     private String comment;
     private Doctor doctor;
+    private int rating;
 
     public int getId() {
         return id;
     }
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
@@ -21,5 +22,9 @@ public class Comment {
 
     public Doctor getDoctor() {
         return doctor;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

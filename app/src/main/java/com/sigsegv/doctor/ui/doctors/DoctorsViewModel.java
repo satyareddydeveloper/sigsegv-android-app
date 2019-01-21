@@ -17,10 +17,12 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class DoctorsViewModel extends ViewModel {
 
+    //Initialize required objects
     private final MainThreadExecutor executor = new MainThreadExecutor();
     private final CompositeDisposable disposable = new CompositeDisposable();
     private final DoctorDataSource doctorDataSource;
 
+    //Mutable data to send background process results to view
     private final MutableLiveData<PagedList<Doctor>> doctors = new MutableLiveData<>();
 
     @Inject
@@ -35,13 +37,16 @@ public class DoctorsViewModel extends ViewModel {
                 .setFetchExecutor(executor).setNotifyExecutor(executor).build());
     }
 
-    LiveData<PagedList<Doctor>> getDoctors() {
-        return doctors;
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
+
+        //Dispose process queue on clear
         disposable.dispose();
+    }
+
+    //Getters for view
+    LiveData<PagedList<Doctor>> getDoctors() {
+        return doctors;
     }
 }
