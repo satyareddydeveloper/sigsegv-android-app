@@ -19,7 +19,7 @@ import com.sigsegv.doctor.ui.main.MainActivity;
 import javax.inject.Inject;
 
 public class DoctorsFragment extends BaseFragment<FragmentDoctorsBinding, MainActivity> implements
-        DoctorsAdapter.AdapterCallback {
+        DoctorsAdapter.AdapterCallback, MainActivity.SearchCallback {
 
     //Inject Dagger 2 provided classes
     @Inject ViewModelProvider.Factory viewModelFactory;
@@ -48,6 +48,9 @@ public class DoctorsFragment extends BaseFragment<FragmentDoctorsBinding, MainAc
         //Handle data refresh
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> viewModel.fetchDoctors());
 
+        //Listen search queries
+        getBaseActivity().setSearchCallback(this);
+
         //Send fetched data to recyclerView adapter
         viewModel.getDoctors().observe(this, doctors -> {
             if (doctors != null) {
@@ -63,5 +66,10 @@ public class DoctorsFragment extends BaseFragment<FragmentDoctorsBinding, MainAc
         doctorViewModel.setDoctor(doctor);
         getBaseActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null)
                 .add(R.id.frameLayout, DoctorFragment.newInstance()).commit();
+    }
+
+    @Override
+    public void onSearch(String query) {
+        viewModel.setKeyword(query);
     }
 }

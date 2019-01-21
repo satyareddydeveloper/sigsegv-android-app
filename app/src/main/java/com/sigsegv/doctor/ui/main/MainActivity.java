@@ -1,11 +1,15 @@
 package com.sigsegv.doctor.ui.main;
 
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -30,6 +34,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements P
     @Inject ViewModelProvider.Factory viewModelFactory;
 
     private MainViewModel viewModel;
+    private SearchCallback searchCallback;
     private final ArrayList<Province> provinces = new ArrayList<>();
 
     @Override //Send layout id to super class
@@ -88,6 +93,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements P
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setQueryHint("Hastane, klinik, doktor arayın..");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if (searchCallback != null)
+                    searchCallback.onSearch(s);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -107,5 +132,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements P
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setSearchCallback(SearchCallback searchCallback) {
+        this.searchCallback = searchCallback;
+    }
+
+    public interface SearchCallback {
+        void onSearch(String query);
     }
 }

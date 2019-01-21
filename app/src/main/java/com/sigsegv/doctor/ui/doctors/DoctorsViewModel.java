@@ -18,23 +18,32 @@ import io.reactivex.disposables.CompositeDisposable;
 public class DoctorsViewModel extends ViewModel {
 
     //Initialize required objects
+    private final PrefUtils prefUtils;
+    private final RestRepository restRepository;
     private final MainThreadExecutor executor = new MainThreadExecutor();
     private final CompositeDisposable disposable = new CompositeDisposable();
-    private final DoctorDataSource doctorDataSource;
 
     //Mutable data to send background process results to view
     private final MutableLiveData<PagedList<Doctor>> doctors = new MutableLiveData<>();
+    private String keyword = "";
 
     @Inject
     DoctorsViewModel(PrefUtils prefUtils, RestRepository restRepository) {
-        doctorDataSource = new DoctorDataSource(prefUtils.getUserToken(), disposable, restRepository);
+        this.prefUtils = prefUtils;
+        this.restRepository = restRepository;
         fetchDoctors();
     }
 
     void fetchDoctors() {
+        final DoctorDataSource doctorDataSource = new DoctorDataSource(prefUtils.getUserToken(), keyword, disposable, restRepository);
         doctors.setValue(new PagedList.Builder<>(doctorDataSource, new PagedList.Config.Builder().setPageSize(20)
                 .setInitialLoadSizeHint(20).setEnablePlaceholders(true).build())
                 .setFetchExecutor(executor).setNotifyExecutor(executor).build());
+    }
+
+    void setKeyword(String keyword) {
+        this.keyword = keyword;
+        fetchDoctors();
     }
 
     @Override

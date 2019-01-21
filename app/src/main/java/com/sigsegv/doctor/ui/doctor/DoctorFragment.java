@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.sigsegv.doctor.R;
@@ -21,8 +20,6 @@ public class DoctorFragment extends BaseFragment<FragmentDoctorBinding, MainActi
     //Inject Dagger 2 provided classes
     @Inject ViewModelProvider.Factory viewModelFactory;
 
-    private DoctorViewModel viewModel;
-
     public static DoctorFragment newInstance() {
         return  new DoctorFragment();
     }
@@ -35,7 +32,7 @@ public class DoctorFragment extends BaseFragment<FragmentDoctorBinding, MainActi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = ViewModelProviders.of(getBaseActivity(), viewModelFactory).get(DoctorViewModel.class);
+        final DoctorViewModel viewModel = ViewModelProviders.of(getBaseActivity(), viewModelFactory).get(DoctorViewModel.class);
 
         //Open comments fragment
         getBinding().btComments.setOnClickListener(v -> getBaseActivity().getSupportFragmentManager().beginTransaction()
