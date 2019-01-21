@@ -30,8 +30,8 @@ public class RestRepository {
         return restService.signUp(email, name, password);
     }
 
-    public Single<PagedResponse<Doctor>> getDoctors(String token, int page, String province) {
-        return restService.getDoctors(String.format("Token %s", token), page, province);
+    public Single<PagedResponse<Doctor>> getDoctors(String token, int page, String keyword) {
+        return restService.getDoctors(String.format("Token %s", token), page, keyword);
     }
 
     public Single<PagedResponse<Comment>> getComments(String token, String keyword, int page) {

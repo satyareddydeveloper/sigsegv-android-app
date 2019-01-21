@@ -23,7 +23,7 @@ public class AppModule {
     @Singleton
     public Retrofit provideRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.43.166:8000/")
+                .baseUrl("http://10.0.2.2:8000/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

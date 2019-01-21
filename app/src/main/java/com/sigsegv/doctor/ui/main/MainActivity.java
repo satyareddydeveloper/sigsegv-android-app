@@ -1,10 +1,8 @@
 package com.sigsegv.doctor.ui.main;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -94,7 +92,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements P
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint("Hastane, klinik, doktor arayın..");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -112,6 +111,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements P
             }
         });
 
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                if (searchCallback != null)
+                    searchCallback.onSearch("");
+                return true;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }

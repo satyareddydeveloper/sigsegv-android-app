@@ -28,7 +28,7 @@ public interface RestService {
     Single<NormalResponse> signUp(@Field("email") String username, @Field("name") String name, @Field("password") String password);
 
     @GET("doctors/doctor")
-    Single<PagedResponse<Doctor>> getDoctors(@Header("Authorization") String token, @Query("page") int page, @Query("province") String province);
+    Single<PagedResponse<Doctor>> getDoctors(@Header("Authorization") String token, @Query("page") int page, @Query("search") String keyword);
 
     @GET("doctors/doctor-comment")
     Single<PagedResponse<Comment>> getComments(@Header("Authorization") String token, @Query("search") String keyword, @Query("page") int page);
